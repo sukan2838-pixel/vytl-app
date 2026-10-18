@@ -236,6 +236,20 @@
     habitChecks.forEach(item => {
       item.addEventListener("change", updateHabits);
     });
+
+document.querySelectorAll('.habitCheck').forEach((checkbox, index) => {
+  const key = 'vytl_habit_' + index;
+
+  checkbox.checked = localStorage.getItem(key) === 'true';
+
+  checkbox.addEventListener('change', () => {
+    localStorage.setItem(key, checkbox.checked);
+    if (typeof updateHabits === 'function') {
+      updateHabits();
+    }
+  });
+});
+
   </script>
 </body>
 </html>
