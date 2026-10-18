@@ -482,5 +482,32 @@
 
     loadToday();
   </script>
+
+<script>
+const VYTL_API = "https://vytl-ai.sukan2838.workers.dev/chat";
+
+async function askVYTL(message) {
+  const response = await fetch(VYTL_API, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      messages: [
+        { role: "user", content: message }
+      ]
+    })
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.details || data.error || "Please try again.");
+  }
+
+  return data.reply;
+}
+</script>
 </body>
 </html>
+
