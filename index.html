@@ -4,252 +4,483 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#111411">
-  <meta name="description" content="VYTL — your everyday wellness companion.">
+  <meta name="theme-color" content="#111410">
+  <meta name="description" content="VYTL — your daily wellness companion. Build better habits, one day at a time.">
   <title>VYTL — Live Better. Every Day.</title>
+
   <style>
     :root {
-      --bg: #111411;
-      --panel: #1c211c;
-      --lime: #c5f467;
-      --text: #f4f7ef;
-      --muted: #a5afa0;
+      --bg: #111410;
+      --panel: #1b1f19;
+      --panel-light: #242a21;
+      --green: #c2f970;
+      --text: #f4f5ef;
+      --muted: #a0a79a;
+      --border: #33392e;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
       background: var(--bg);
       color: var(--text);
-      font-family: Arial, sans-serif;
+      font-family: system-ui, -apple-system, sans-serif;
       line-height: 1.5;
+    }
+
+    .container {
+      width: min(100% - 32px, 680px);
+      margin: auto;
+      padding: 28px 0 48px;
     }
 
     header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 22px 20px;
-      border-bottom: 1px solid #30372f;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 30px;
     }
 
     .logo {
-      color: var(--lime);
       font-size: 28px;
-      font-weight: 900;
+      font-weight: 850;
       letter-spacing: 3px;
+      color: var(--green);
     }
 
-    .tag {
+    .tagline {
       color: var(--muted);
-      font-size: 11px;
-    }
-
-    main {
-      width: min(100% - 32px, 520px);
-      margin: 28px auto;
-    }
-
-    .welcome {
-      padding: 25px 20px;
-      border-radius: 22px;
-      background: linear-gradient(145deg, #283324, #1c211c);
-      border: 1px solid #394532;
+      font-size: 12px;
+      text-align: right;
     }
 
     .eyebrow {
-      color: var(--lime);
-      font-size: 12px;
-      font-weight: bold;
+      color: var(--green);
+      text-transform: uppercase;
       letter-spacing: 2px;
+      font-size: 11px;
+      font-weight: 750;
     }
 
     h1 {
+      font-size: clamp(30px, 7vw, 43px);
+      line-height: 1.12;
       margin: 10px 0;
-      font-size: 32px;
-      line-height: 1.15;
+      letter-spacing: -1.5px;
     }
 
-    p { color: var(--muted); }
+    h1 span {
+      color: var(--green);
+    }
+
+    .intro {
+      color: var(--muted);
+      margin: 0 0 26px;
+      max-width: 470px;
+    }
 
     .card {
-      margin-top: 16px;
-      padding: 20px;
-      border-radius: 18px;
       background: var(--panel);
-      border: 1px solid #30372f;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 21px;
+      margin-top: 16px;
     }
 
-    h2 {
-      margin: 0 0 8px;
-      font-size: 18px;
+    .card h2 {
+      font-size: 19px;
+      margin: 0 0 5px;
+    }
+
+    .description {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0 0 20px;
+    }
+
+    .field {
+      margin-bottom: 18px;
     }
 
     label {
       display: block;
-      margin: 14px 0 6px;
-      color: var(--muted);
+      font-size: 14px;
+      font-weight: 650;
+      margin-bottom: 8px;
+    }
+
+    select, textarea {
+      display: block;
+      width: 100%;
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px;
+      font: inherit;
       font-size: 14px;
     }
 
-    select, input, button {
-      width: 100%;
-      padding: 13px;
-      border-radius: 11px;
-      font-size: 15px;
-    }
-
-    select, input {
-      background: #111411;
-      color: var(--text);
-      border: 1px solid #414a3d;
+    select:focus, textarea:focus {
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
     }
 
     button {
-      margin-top: 14px;
+      width: 100%;
       border: 0;
-      background: var(--lime);
-      color: #17200f;
-      font-weight: bold;
+      border-radius: 11px;
+      padding: 14px 16px;
+      background: var(--green);
+      color: #14180e;
+      font-weight: 800;
+      font-size: 15px;
       cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.99);
+    }
+
+    .status {
+      font-size: 13px;
+      color: var(--green);
+      margin: 12px 0 0;
+      min-height: 20px;
     }
 
     .habit {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-top: 14px;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
     }
 
-    .habit input { width: 20px; }
+    .habit:last-of-type {
+      border-bottom: 0;
+    }
 
-    .result {
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 10px;
-      background: #283324;
-      color: var(--lime);
+    .habitCheck {
+      appearance: none;
+      flex: 0 0 22px;
+      width: 22px;
+      height: 22px;
+      margin: 0;
+      border: 1px solid #68715e;
+      border-radius: 7px;
+      background: var(--bg);
+      cursor: pointer;
+    }
+
+    .habitCheck:checked {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .habitCheck:checked::after {
+      content: "✓";
+      display: block;
+      color: #14180e;
+      font-size: 15px;
+      font-weight: 900;
+      text-align: center;
+      line-height: 20px;
+    }
+
+    .habitName {
+      flex: 1;
+      font-size: 14px;
+    }
+
+    .habitCheck:checked + .habitName {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    .progress-track {
+      height: 7px;
+      background: var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 15px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--green);
+      border-radius: 20px;
+      transition: width 0.2s;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 9px;
+    }
+
+    .companion {
+      background: linear-gradient(145deg, #222b1c, #191d17);
+      border-color: #414b34;
+    }
+
+    .companion-mark {
+      display: grid;
+      place-items: center;
+      width: 43px;
+      height: 43px;
+      background: var(--green);
+      color: #14180e;
+      border-radius: 14px;
+      font-size: 23px;
+      margin-bottom: 15px;
+    }
+
+    .notice {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 13px;
     }
 
     footer {
-      padding: 20px;
       text-align: center;
       color: var(--muted);
       font-size: 12px;
+      margin-top: 30px;
+    }
+
+    footer strong {
+      color: var(--green);
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <div>
+  <main class="container">
+
+    <header>
       <div class="logo">VYTL</div>
-      <div class="tag">LIVE BETTER. EVERY DAY.</div>
-    </div>
-    <span aria-label="Wellness">✳</span>
-  </header>
+      <div class="tagline">Live Better.<br>Every Day.</div>
+    </header>
 
-  <main>
-    <section class="welcome">
-      <div class="eyebrow">YOUR DAILY RESET</div>
-      <h1>Small steps.<br>Better you.</h1>
-      <p>Your wellness journey starts with one achievable action today.</p>
+    <section>
+      <div class="eyebrow">Your daily reset</div>
+      <h1>Small steps.<br><span>Better you.</span></h1>
+      <p class="intro">
+        Take a moment for yourself. Track how you feel,
+        build healthier habits, and make today count.
+      </p>
     </section>
 
     <section class="card">
-      <h2>Daily check-in</h2>
-      <p>How are you feeling today?</p>
+      <h2>Daily Check-in</h2>
+      <p class="description">
+        How are you feeling today?
+      </p>
 
-      <label for="energy">Energy level</label>
-      <select id="energy">
-        <option value="Low">Low</option>
-        <option value="Okay" selected>Okay</option>
-        <option value="Good">Good</option>
-      </select>
+      <form id="checkinForm">
+        <div class="field">
+          <label for="energy">Your energy level</label>
+          <select id="energy" required>
+            <option value="">Choose your energy level</option>
+            <option value="1">1 — Very low</option>
+            <option value="2">2 — Low</option>
+            <option value="3">3 — Okay</option>
+            <option value="4">4 — Good</option>
+            <option value="5">5 — Excellent</option>
+          </select>
+        </div>
 
-      <label for="sleep">Sleep last night</label>
-      <select id="sleep">
-        <option value="Less than 5 hours">Less than 5 hours</option>
-        <option value="5–7 hours" selected>5–7 hours</option>
-        <option value="7–9 hours">7–9 hours</option>
-        <option value="More than 9 hours">More than 9 hours</option>
-      </select>
+        <div class="field">
+          <label for="sleep">How much did you sleep?</label>
+          <select id="sleep" required>
+            <option value="">Choose your sleep duration</option>
+            <option value="less than 4">Less than 4 hours</option>
+            <option value="4-5">4–5 hours</option>
+            <option value="6-7">6–7 hours</option>
+            <option value="7-9">7–9 hours</option>
+            <option value="more than 9">More than 9 hours</option>
+          </select>
+        </div>
 
-      <button id="saveCheckin">Save today's check-in</button>
-      <div id="checkinResult" aria-live="polite"></div>
+        <button type="submit" id="saveCheckin">
+          Save today's check-in
+        </button>
+        <p class="status" id="checkinResult" role="status"></p>
+      </form>
     </section>
 
     <section class="card">
-      <h2>Today's habits</h2>
-      <p>Choose a small action you can complete today.</p>
+      <h2>Today's Habits</h2>
+      <p class="description">
+        Progress, not perfection. One habit at a time.
+      </p>
 
       <label class="habit">
-        <input type="checkbox" class="habitCheck">
-        Drink water regularly
-      </label>
-      <label class="habit">
-        <input type="checkbox" class="habitCheck">
-        Take a short movement break
-      </label>
-      <label class="habit">
-        <input type="checkbox" class="habitCheck">
-        Make time to unwind
+        <input class="habitCheck" type="checkbox" value="water">
+        <span class="habitName">Drink enough water</span>
       </label>
 
-      <div id="habitResult" class="result" aria-live="polite">
-        0 of 3 habits completed
+      <label class="habit">
+        <input class="habitCheck" type="checkbox" value="movement">
+        <span class="habitName">Move your body for 10 minutes</span>
+      </label>
+
+      <label class="habit">
+        <input class="habitCheck" type="checkbox" value="mind">
+        <span class="habitName">Take 5 minutes to relax</span>
+      </label>
+
+      <div class="progress-track">
+        <div class="progress-bar" id="progressBar"></div>
       </div>
+
+      <div class="progress-label">
+        <span>Daily progress</span>
+        <span id="habitProgress">0 of 3 completed</span>
+      </div>
+
+      <p class="status" id="habitResult" role="status" aria-live="polite"></p>
     </section>
 
-    <section class="card">
-      <h2>Your wellness companion</h2>
-      <p>The AI companion will be connected in a later step. For now, your check-in and habits work without an AI service.</p>
-      <p>VYTL provides general wellness support, not diagnosis or medical treatment.</p>
+    <section class="card companion">
+      <div class="companion-mark">✳</div>
+      <div class="eyebrow">Your wellness space</div>
+      <h2>Meet your wellness companion</h2>
+      <p class="description">
+        A little support can make a big difference.
+        Your personal wellness companion is coming soon.
+      </p>
+      <p class="notice">
+        This is an early version of VYTL. AI chat and personalized
+        guidance have not been connected yet.
+      </p>
     </section>
+
+    <footer>
+      <strong>VYTL</strong> · Live Better. Every Day.<br>
+      Your wellbeing matters. Take it one day at a time.
+    </footer>
+
   </main>
 
-  <footer>
-    VYTL is for adults aged 18 and older.<br>
-    For urgent medical symptoms, seek appropriate medical care.
-  </footer>
-
   <script>
-    const checkinButton = document.getElementById("saveCheckin");
+    const energy = document.getElementById("energy");
+    const sleep = document.getElementById("sleep");
+    const checkinForm = document.getElementById("checkinForm");
     const checkinResult = document.getElementById("checkinResult");
-    const habitChecks = document.querySelectorAll(".habitCheck");
     const habitResult = document.getElementById("habitResult");
+    const habitProgress = document.getElementById("habitProgress");
+    const progressBar = document.getElementById("progressBar");
+    const habits = [...document.querySelectorAll(".habitCheck")];
 
-    checkinButton.addEventListener("click", function () {
-      const energy = document.getElementById("energy").value;
-      const sleep = document.getElementById("sleep").value;
+    // Use today's local date so each day has its own check-in and habits.
+    function todayKey() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
 
-      checkinResult.className = "result";
-      checkinResult.textContent =
-        "Check-in complete. Energy: " + energy + ". Sleep: " + sleep + ".";
-    });
+    function storageKey(type) {
+      return `vytl_${type}_${todayKey()}`;
+    }
 
     function updateHabits() {
-      const completed = [...habitChecks].filter(item => item.checked).length;
-      habitResult.textContent = completed + " of 3 habits completed";
+      const completed = habits.filter(habit => habit.checked).length;
+      const total = habits.length;
+
+      habitProgress.textContent = `${completed} of ${total} completed`;
+      progressBar.style.width = `${total ? completed / total * 100 : 0}%`;
+
+      if (completed === total) {
+        habitResult.textContent = "Amazing! You've completed today's habits.";
+      } else if (completed > 0) {
+        habitResult.textContent = "Nice progress. Keep going!";
+      } else {
+        habitResult.textContent = "";
+      }
     }
 
-    habitChecks.forEach(item => {
-      item.addEventListener("change", updateHabits);
+    function loadToday() {
+      // Restore today's check-in.
+      try {
+        const savedCheckin = localStorage.getItem(storageKey("checkin"));
+
+        if (savedCheckin) {
+          const data = JSON.parse(savedCheckin);
+          energy.value = data.energy || "";
+          sleep.value = data.sleep || "";
+          checkinResult.textContent = "Today's check-in is saved on this device.";
+          document.getElementById("saveCheckin").textContent = "Update today's check-in";
+        }
+
+        // Restore today's habits.
+        const savedHabits = JSON.parse(
+          localStorage.getItem(storageKey("habits")) || "{}"
+        );
+
+        habits.forEach(habit => {
+          habit.checked = savedHabits[habit.value] === true;
+        });
+
+        updateHabits();
+      } catch (error) {
+        checkinResult.textContent =
+          "Local saving is unavailable in this browser. Your changes may not persist.";
+      }
+    }
+
+    checkinForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      if (!energy.value || !sleep.value) {
+        checkinResult.textContent = "Please answer both questions first.";
+        return;
+      }
+
+      try {
+        localStorage.setItem(storageKey("checkin"), JSON.stringify({
+          energy: energy.value,
+          sleep: sleep.value
+        }));
+
+        checkinResult.textContent = "Daily check-in saved successfully!";
+        document.getElementById("saveCheckin").textContent = "Update today's check-in";
+      } catch (error) {
+        checkinResult.textContent =
+          "Could not save. Please check your browser's storage settings.";
+      }
     });
 
-document.querySelectorAll('.habitCheck').forEach((checkbox, index) => {
-  const key = 'vytl_habit_' + index;
+    habits.forEach(habit => {
+      habit.addEventListener("change", function() {
+        try {
+          const savedHabits = JSON.parse(
+            localStorage.getItem(storageKey("habits")) || "{}"
+          );
 
-  checkbox.checked = localStorage.getItem(key) === 'true';
+          savedHabits[habit.value] = habit.checked;
+          localStorage.setItem(storageKey("habits"), JSON.stringify(savedHabits));
 
-  checkbox.addEventListener('change', () => {
-    localStorage.setItem(key, checkbox.checked);
-    if (typeof updateHabits === 'function') {
-      updateHabits();
-    }
-  });
-});
+          updateHabits();
+        } catch (error) {
+          habitResult.textContent =
+            "Could not save your habits in this browser.";
+        }
+      });
+    });
 
+    loadToday();
   </script>
 </body>
 </html>
