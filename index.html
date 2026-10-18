@@ -608,6 +608,37 @@ async function askVYTL(message) {
   });
 })();
 </script>
+
+<style>
+#vytl-form {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+#vytl-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 100px;
+  height: 100px;
+  padding: 12px;
+  box-sizing: border-box;
+  resize: vertical;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+#vytl-send {
+  flex: 0 0 auto;
+  align-self: flex-end;
+  width: auto;
+  min-width: 64px;
+  padding: 12px 16px;
+  font-size: 14px;
+}
+</style>
 </body>
 </html>
 
