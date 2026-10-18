@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111411">
+  <meta name="description" content="VYTL — your everyday wellness companion.">
+  <title>VYTL — Live Better. Every Day.</title>
+  <style>
+    :root {
+      --bg: #111411;
+      --panel: #1c211c;
+      --lime: #c5f467;
+      --text: #f4f7ef;
+      --muted: #a5afa0;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 20px;
+      border-bottom: 1px solid #30372f;
+    }
+
+    .logo {
+      color: var(--lime);
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 3px;
+    }
+
+    .tag {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    main {
+      width: min(100% - 32px, 520px);
+      margin: 28px auto;
+    }
+
+    .welcome {
+      padding: 25px 20px;
+      border-radius: 22px;
+      background: linear-gradient(145deg, #283324, #1c211c);
+      border: 1px solid #394532;
+    }
+
+    .eyebrow {
+      color: var(--lime);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      margin: 10px 0;
+      font-size: 32px;
+      line-height: 1.15;
+    }
+
+    p { color: var(--muted); }
+
+    .card {
+      margin-top: 16px;
+      padding: 20px;
+      border-radius: 18px;
+      background: var(--panel);
+      border: 1px solid #30372f;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 6px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    select, input, button {
+      width: 100%;
+      padding: 13px;
+      border-radius: 11px;
+      font-size: 15px;
+    }
+
+    select, input {
+      background: #111411;
+      color: var(--text);
+      border: 1px solid #414a3d;
+    }
+
+    button {
+      margin-top: 14px;
+      border: 0;
+      background: var(--lime);
+      color: #17200f;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .habit {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .habit input { width: 20px; }
+
+    .result {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #283324;
+      color: var(--lime);
+    }
+
+    footer {
+      padding: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="logo">VYTL</div>
+      <div class="tag">LIVE BETTER. EVERY DAY.</div>
+    </div>
+    <span aria-label="Wellness">✳</span>
+  </header>
+
+  <main>
+    <section class="welcome">
+      <div class="eyebrow">YOUR DAILY RESET</div>
+      <h1>Small steps.<br>Better you.</h1>
+      <p>Your wellness journey starts with one achievable action today.</p>
+    </section>
+
+    <section class="card">
+      <h2>Daily check-in</h2>
+      <p>How are you feeling today?</p>
+
+      <label for="energy">Energy level</label>
+      <select id="energy">
+        <option value="Low">Low</option>
+        <option value="Okay" selected>Okay</option>
+        <option value="Good">Good</option>
+      </select>
+
+      <label for="sleep">Sleep last night</label>
+      <select id="sleep">
+        <option value="Less than 5 hours">Less than 5 hours</option>
+        <option value="5–7 hours" selected>5–7 hours</option>
+        <option value="7–9 hours">7–9 hours</option>
+        <option value="More than 9 hours">More than 9 hours</option>
+      </select>
+
+      <button id="saveCheckin">Save today's check-in</button>
+      <div id="checkinResult" aria-live="polite"></div>
+    </section>
+
+    <section class="card">
+      <h2>Today's habits</h2>
+      <p>Choose a small action you can complete today.</p>
+
+      <label class="habit">
+        <input type="checkbox" class="habitCheck">
+        Drink water regularly
+      </label>
+      <label class="habit">
+        <input type="checkbox" class="habitCheck">
+        Take a short movement break
+      </label>
+      <label class="habit">
+        <input type="checkbox" class="habitCheck">
+        Make time to unwind
+      </label>
+
+      <div id="habitResult" class="result" aria-live="polite">
+        0 of 3 habits completed
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Your wellness companion</h2>
+      <p>The AI companion will be connected in a later step. For now, your check-in and habits work without an AI service.</p>
+      <p>VYTL provides general wellness support, not diagnosis or medical treatment.</p>
+    </section>
+  </main>
+
+  <footer>
+    VYTL is for adults aged 18 and older.<br>
+    For urgent medical symptoms, seek appropriate medical care.
+  </footer>
+
+  <script>
+    const checkinButton = document.getElementById("saveCheckin");
+    const checkinResult = document.getElementById("checkinResult");
+    const habitChecks = document.querySelectorAll(".habitCheck");
+    const habitResult = document.getElementById("habitResult");
+
+    checkinButton.addEventListener("click", function () {
+      const energy = document.getElementById("energy").value;
+      const sleep = document.getElementById("sleep").value;
+
+      checkinResult.className = "result";
+      checkinResult.textContent =
+        "Check-in complete. Energy: " + energy + ". Sleep: " + sleep + ".";
+    });
+
+    function updateHabits() {
+      const completed = [...habitChecks].filter(item => item.checked).length;
+      habitResult.textContent = completed + " of 3 habits completed";
+    }
+
+    habitChecks.forEach(item => {
+      item.addEventListener("change", updateHabits);
+    });
+  </script>
+</body>
+</html>
